@@ -4,6 +4,8 @@ import HomePage from "./HomePage";
 import LandingPage from "./MenuPage";
 import AdminLogin from "./AdminLogin";
 import AdminDashboard from "./AdminDashboard";
+import About from "./About";
+import Contact from "./Contact";
 
 function App() {
   return (
@@ -13,6 +15,10 @@ function App() {
           <Route path="/menu" element={<LandingPage />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/about" element={<About />} />
+                                    <Route path="/contact" element={<Contact />} />
+
+
         </Routes>
     
     </div>

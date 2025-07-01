@@ -85,24 +85,22 @@ Friendship begins over a cup            </motion.p>
                 {[
                   {
                     id: 1,
-                    name: "Ethiopian Yirgacheffe",
-                    desc: "Floral notes with citrus acidity",
-                    price: "$5.99",
+                    name: "Biryani",
+desc: "Aromatic rice with rich spices and tender meat",
+
                     image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmlyeWFuaXxlbnwwfHwwfHx8MA%3D%3D"
                   },
                   {
                     id: 2,
-                    name: "Colombian Supremo",
-                    desc: "Caramel sweetness with nutty finish",
-                    price: "$6.49",
+                  name: "Filter Coffee",
+  desc: "Strong South Indian coffee with rich aroma",
                     image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y29mZmVlfGVufDB8fDB8fHww"
                   },
                   {
                     id: 3,
-                    name: "Sumatra Mandheling",
-                    desc: "Earthy with chocolate undertones",
-                    price: "$7.99",
-                    image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                      name: "Spicy Chicken Roll",
+  desc: "Chicken cooked in spicy masala, rolled with onions and chutney",
+                    image: "https://plus.unsplash.com/premium_photo-1679287668420-80c27ea4fb31?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2hpY2tlbiUyMHdyYXB8ZW58MHx8MHx8fDA%3Ds"
                   }
                 ].map((product, index) => (
                   <div className="col-md-4" key={product.id} data-aos="fade-up" data-aos-delay={index * 100}>
@@ -122,7 +120,6 @@ Friendship begins over a cup            </motion.p>
                         <p className="card-text text-muted">{product.desc}</p>
                         <div className="d-flex justify-content-between align-items-center">
                           <span className="text-primary fw-bold">{product.price}</span>
-                          <button className="btn btn-sm btn-outline-primary">Add to Cart</button>
                         </div>
                       </div>
                     </motion.div>
@@ -156,27 +153,31 @@ Friendship begins over a cup            </motion.p>
               <h2 className="text-center mb-5 fw-bold" data-aos="fade-up">What Our Customers Say</h2>
               <div className="row g-4">
                 {[
-                  {
-                    id: 1,
-                    name: "Sarah Johnson",
-                    role: "Coffee Enthusiast",
-                    text: "The best coffee I've ever had! The atmosphere is perfect for working or relaxing.",
-                    image: "https://randomuser.me/api/portraits/women/43.jpg"
-                  },
-                  {
-                    id: 2,
-                    name: "Michael Chen",
-                    role: "Food Blogger",
-                    text: "Their cold brew is legendary. I come here every weekend without fail!",
-                    image: "https://randomuser.me/api/portraits/men/32.jpg"
-                  },
-                  {
-                    id: 3,
-                    name: "Emma Rodriguez",
-                    role: "Local Artist",
-                    text: "The creative vibe here is inspiring. Plus, their latte art is Instagram-worthy!",
-                    image: "https://randomuser.me/api/portraits/women/65.jpg"
-                  }
+
+  {
+    id: 1,
+    name: "Vikram Reddy",
+    role: "Biryani Lover",
+    text: "Mee café lo Hyderabadi Biryani chala tasty. Perfect spice and aroma!",
+    image: "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80"
+  },
+  {
+    id: 2,
+    name: "Sai Teja",
+    role: "Coffee Addict",
+    text: "Filter coffee taste super. Every sip reminds me of home!",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4lZYNTcEWjMNOUw0pwNdVHHnxgCRb_Ed8JQ&s"
+  },
+  {
+    id: 3,
+    name: "Naveen Kumar",
+    role: "Street Food Fan",
+    text: "Chicken roll lo flavor full kick undi. Must try!",
+    image: "https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80"
+  }
+
+
+
                 ].map((testimonial, index) => (
                   <div className="col-md-4" key={testimonial.id} data-aos="fade-up" data-aos-delay={index * 100}>
                     <div className="card border-0 shadow-sm h-100">
@@ -233,10 +234,12 @@ Friendship begins over a cup            </motion.p>
       </div>
       <div className="col-lg-4" data-aos="fade-up" data-aos-delay="200">
         <h5 className="fw-bold mb-4">Contact Us</h5>
-        <p><i className="bi bi-geo-alt-fill me-2"></i> 123 Cafe Street, Hyderabad, Telangana, India</p>
+        <p><i className="bi bi-geo-alt-fill me-2"></i> 9HJ7+7FH, Near GRS Restaurant,
+Punganur, Andhra Pradesh – 517247,
+India</p>
         <p><i className="bi bi-telephone-fill me-2"></i> +91 94407 33910</p>
-        <p><i className="bi bi-envelope-fill me-2"></i> info@friendscoffeecafe.com</p>
-        <p><i className="bi bi-clock-fill me-2"></i> Open daily: 7:00 AM - 10:00 PM</p>
+        <p><i className="bi bi-envelope-fill me-2"></i> thoufiqaa11@gmail.com</p>
+        <p><i className="bi bi-clock-fill me-2"></i> Open daily: 5:00 AM - 7:00 PM</p>
       </div>
     </div>
     <hr className="my-4" />

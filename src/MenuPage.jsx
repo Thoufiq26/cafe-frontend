@@ -1,5 +1,5 @@
 /* eslint-env browser */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import logo from "./assets/logo.png"; // Adjust the path as necessary
 import {
   FiCoffee,
   FiPhone,
@@ -46,6 +47,8 @@ const MenuPage = () => {
     acceptingOrders: true,
     message: "",
   });
+  const [navbarExpanded, setNavbarExpanded] = useState(false);
+  const navbarRef = useRef(null);
 
   useEffect(() => {
     AOS.init({
@@ -75,9 +78,6 @@ const MenuPage = () => {
           axios.get("https://cafe-backend-23gm.onrender.com/api/ratings"),
           axios.get("https://cafe-backend-23gm.onrender.com/api/shop-status"),
         ]);
-        console.log("Menu response:", menuResponse.data);
-        console.log("Ratings response:", ratingsResponse.data);
-        console.log("Shop status response:", statusResponse.data);
         setMenuItems(menuResponse.data || []);
         setRatings(ratingsResponse.data || []);
         setShopStatus(statusResponse.data || { isOpen: true, acceptingOrders: true, message: "" });
@@ -89,8 +89,22 @@ const MenuPage = () => {
       }
     };
     fetchData();
-    const interval = setInterval(fetchData, 30000); // Poll every 30 seconds
+    const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Close navbar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+        setNavbarExpanded(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleOrder = (cartItems) => {
@@ -142,13 +156,14 @@ const MenuPage = () => {
 
   const submitOrder = async (e) => {
     e.preventDefault();
-    const selectedTime = new Date(`1970-01-01T${order.collectionTime}:00`);
-    const startTime = new Date(`1970-01-01T07:00:00`);
-    const endTime = new Date(`1970-01-01T22:00:00`);
-    if (selectedTime < startTime || selectedTime > endTime) {
-      alert("Please select a collection time between 7:00 AM and 10:00 PM.");
-      return;
-    }
+   const selectedTime = new Date(`1970-01-01T${order.collectionTime}:00`);
+const startTime = new Date(`1970-01-01T05:00:00`);
+const endTime = new Date(`1970-01-01T19:00:00`);
+if (selectedTime < startTime || selectedTime > endTime) {
+  alert("Please select a collection time between 5:00 AM and 7:00 PM.");
+  return;
+}
+
     setShowOrderModal(false);
     setShowConfirmModal(true);
   };
@@ -215,6 +230,7 @@ const MenuPage = () => {
     <div className="landing-page">
       {/* Navigation */}
       <nav
+        ref={navbarRef}
         className={`navbar navbar-expand-lg navbar-dark fixed-top ${
           scrolled ? "bg-dark shadow" : "bg-transparent"
         }`}
@@ -223,38 +239,48 @@ const MenuPage = () => {
           <Link to="/" className="navbar-brand d-flex align-items-center">
             <div className="logo-placeholder me-2">
               <img
-                src="https://images.unsplash.com/photo-1517705008128-361805f42e86?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=60&ixid=MnwxfDB8MXxyYW5kb218MHx8Y29mZmVlLGxvZ298fHx8fHwxNjg1MjE4NDQ0&ixlib=rb-4.0.3&q=80&w=60"
+                src={logo}
                 alt="Friends Coffee Cafe Logo"
                 className="logo-img rounded-circle"
               />
             </div>
-            <span className="fw-bold">Friends Coffee</span>
+            <span className="fw-bold">Friends Coffee Cafe</span>
           </Link>
           <button
             className="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
+            onClick={() => setNavbarExpanded(!navbarExpanded)}
+            aria-expanded={navbarExpanded}
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className={`collapse navbar-collapse ${navbarExpanded ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <Link to="/menu" className="nav-link text-light">
+                <Link 
+                  to="/menu" 
+                  className="nav-link text-light"
+                  onClick={() => setNavbarExpanded(false)}
+                >
                   Menu
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/about" className="nav-link text-light">
+                <Link 
+                  to="/about" 
+                  className="nav-link text-light"
+                  onClick={() => setNavbarExpanded(false)}
+                >
                   About
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/contact" className="nav-link text-light">
+                <Link 
+                  to="/contact" 
+                  className="nav-link text-light"
+                  onClick={() => setNavbarExpanded(false)}
+                >
                   Contact
                 </Link>
               </li>
@@ -282,7 +308,6 @@ const MenuPage = () => {
               </div>
             </form>
             <ul className="navbar-nav align-items-center">
-              {/* Shop Status Indicator */}
               <li className="nav-item me-2">
                 <span
                   className={`d-flex align-items-center text-white ${
@@ -302,7 +327,11 @@ const MenuPage = () => {
                 </span>
               </li>
               <li className="nav-item">
-                <Link to="/admin-login" className="btn btn-outline-light ms-2">
+                <Link 
+                  to="/admin-login" 
+                  className="btn btn-outline-light ms-2"
+                  onClick={() => setNavbarExpanded(false)}
+                >
                   <i className="bi bi-person-fill-gear me-2"></i>Admin
                 </Link>
               </li>
@@ -311,6 +340,7 @@ const MenuPage = () => {
                   className="btn btn-outline-light ms-2 position-relative"
                   data-bs-toggle="offcanvas"
                   data-bs-target="#cartOffcanvas"
+                  onClick={() => setNavbarExpanded(false)}
                 >
                   <FiShoppingCart className="me-1" />
                   {cart.length > 0 && (
@@ -325,26 +355,7 @@ const MenuPage = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-overlay"></div>
-        <div className="hero-content text-center text-white">
-          <h1 className="display-3 fw-bold mb-4" data-aos="fade-up">
-            Friends Coffee Cafe
-          </h1>
-          <p className="lead mb-5" data-aos="fade-up" data-aos-delay="100">
-            Crafting the perfect cup since 2010
-          </p>
-          <Link
-            to="/menu"
-            className="btn btn-primary btn-lg px-4 py-3 rounded-pill shadow"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            Explore Our Menu
-          </Link>
-        </div>
-      </section>
+  
 
       {/* Main Content */}
       <main className="container py-5">
@@ -366,7 +377,7 @@ const MenuPage = () => {
         )}
 
         <section className="mb-5">
-          <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="d-flex justify-content-between align-items-center mb-4  gapp">
             <h2 className="fw-bold" data-aos="fade-up">
               Our Menu
             </h2>
@@ -639,14 +650,16 @@ const MenuPage = () => {
             <div className="col-md-6" data-aos="fade-left">
               <div className="card border-0 shadow-sm h-100">
                 <div className="card-body p-0">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.263318410632!2d78.4484144153847!3d17.44855050534816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9158f201b205%3A0x5c3f5a5a5a5a5a5a!2sFriends%20Coffee%20Cafe!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin"
-                    width="100%"
-                    height="100%"
-                    style={{ minHeight: "300px", border: "0" }}
-                    allowFullScreen=""
-                    loading="lazy"
-                  ></iframe>
+<iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3881.496077812753!2d78.56056387314605!3d13.381580105761122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb27bff2c2e5797%3A0x6edf014dd7a3984d!2s9HJ7%2B7FH%2C%20Punganur%2C%20Andhra%20Pradesh%20517247!5e0!3m2!1sen!2sin!4v1751378786313!5m2!1sen!2sin"
+  width="100%"
+  height="450"
+  style={{ border: 0 }}
+  allowFullScreen=""
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+/>
+
                 </div>
               </div>
             </div>
@@ -706,12 +719,14 @@ const MenuPage = () => {
             <div className="col-lg-3">
               <h5 className="fw-bold mb-4">Contact Info</h5>
               <p>
-                <FiMapPin className="me-2" /> 123 Cafe Street, Hyderabad, India
+                <FiMapPin className="me-2" /> 9HJ7+7FH, Near GRS Restaurant,
+Punganur, Andhra Pradesh – 517247,
+India
               </p>
               <p>
                 <FiPhone className="me-2" /> +91 94407 33910
               </p>
-              <p>Open daily: 7:00 AM - 10:00 PM</p>
+              <p>Open daily: 5:00 AM - 7:00 PM</p>
             </div>
             <div className="col-lg-3">
               <h5 className="fw-bold mb-4">Newsletter</h5>
