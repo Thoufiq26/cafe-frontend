@@ -24,7 +24,7 @@ const AdminLogin = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/admin/login',
+        'https://cafe-backend-23gm.onrender.com/api/admin/login',
         { username, password },
         { timeout: 10000 }
       );
