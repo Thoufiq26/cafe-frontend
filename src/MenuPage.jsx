@@ -71,9 +71,9 @@ const MenuPage = () => {
       setError(null);
       try {
         const [menuResponse, ratingsResponse, statusResponse] = await Promise.all([
-          axios.get("http://localhost:5000/api/menu"),
-          axios.get("http://localhost:5000/api/ratings"),
-          axios.get("http://localhost:5000/api/shop-status"),
+          axios.get("https://cafe-backend-23gm.onrender.com/api/menu"),
+          axios.get("https://cafe-backend-23gm.onrender.com/api/ratings"),
+          axios.get("https://cafe-backend-23gm.onrender.com/api/shop-status"),
         ]);
         console.log("Menu response:", menuResponse.data);
         console.log("Ratings response:", ratingsResponse.data);
@@ -156,7 +156,7 @@ const MenuPage = () => {
   const confirmOrder = async () => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/orders", order);
+      await axios.post("https://cafe-backend-23gm.onrender.com/api/orders", order);
       alert("Order placed successfully! Admin notified via WhatsApp.");
       setShowConfirmModal(false);
       setOrder({
@@ -178,7 +178,7 @@ const MenuPage = () => {
   const submitRating = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/ratings", newRating);
+      await axios.post("https://cafe-backend-23gm.onrender.com/api/ratings", newRating);
       const response = await axios.get("http://localhost:5000/api/ratings");
       setRatings(response.data || []);
       setNewRating({ name: "", itemId: "", rating: 0, comment: "" });
