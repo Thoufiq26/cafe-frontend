@@ -47,9 +47,9 @@ const AdminDashboard = () => {
     setError(null);
     try {
       const [menuResponse, ordersResponse, statusResponse] = await Promise.all([
-        axios.get('http://localhost:5000/api/menu'),
-        axios.get('http://localhost:5000/api/orders'),
-        axios.get('http://localhost:5000/api/shop-status'),
+        axios.get('https://cafe-backend-23gm.onrender.com/api/menu'),
+        axios.get('https://cafe-backend-23gm.onrender.com/api/orders'),
+        axios.get('https://cafe-backend-23gm.onrender.com/api/shop-status'),
       ]);
 
       console.log('Menu items:', menuResponse.data);
@@ -89,7 +89,7 @@ const AdminDashboard = () => {
       formData.append('category', newItem.category);
       formData.append('description', newItem.description);
 
-      await axios.post('http://localhost:5000/api/menu', formData, {
+      await axios.post('https://cafe-backend-23gm.onrender.com/api/menu', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert('Item added successfully');
@@ -115,7 +115,7 @@ const AdminDashboard = () => {
     setLoading(true);
     setError(null);
     try {
-      await axios.put(`http://localhost:5000/api/menu/${id}`, { available: !available });
+      await axios.put(`https://cafe-backend-23gm.onrender.com/api/menu/${id}`, { available: !available });
       fetchInitialData();
     } catch (error) {
       console.error('Error updating availability:', error);
@@ -130,7 +130,7 @@ const AdminDashboard = () => {
       setLoading(true);
       setError(null);
       try {
-        await axios.delete(`http://localhost:5000/api/menu/${id}`);
+        await axios.delete(`https://cafe-backend-23gm.onrender.com/api/menu/${id}`);
         alert('Item deleted successfully');
         fetchInitialData();
       } catch (error) {
@@ -147,7 +147,7 @@ const AdminDashboard = () => {
     setError(null);
     try {
       const updatedStatus = { ...shopStatus, [field]: value };
-      await axios.put('http://localhost:5000/api/shop-status', updatedStatus);
+      await axios.put('https://cafe-backend-23gm.onrender.com/api/shop-status', updatedStatus);
       setShopStatus(updatedStatus);
       alert(`Shop ${field} updated successfully`);
     } catch (error) {
@@ -162,7 +162,7 @@ const AdminDashboard = () => {
     setLoading(true);
     setError(null);
     try {
-      await axios.put(`http://localhost:5000/api/orders/${orderId}`, { completed });
+      await axios.put(`https://cafe-backend-23gm.onrender.com/api/orders/${orderId}`, { completed });
       fetchInitialData();
       alert(`Order marked as ${completed ? 'completed' : 'pending'}`);
     } catch (error) {
@@ -360,7 +360,7 @@ const AdminDashboard = () => {
                         <div className="card h-100">
                           <div className="card-img-container">
                             <img
-                              src={item.image ? `http://localhost:5000${item.image}` : 'https://via.placeholder.com/300?text=No+Image'}
+                              src={item.image ? `https://cafe-backend-23gm.onrender.com${item.image}` : 'https://via.placeholder.com/300?text=No+Image'}
                               alt={item.name}
                               className="card-img-top"
                               style={{ height: '200px', objectFit: 'cover' }}
